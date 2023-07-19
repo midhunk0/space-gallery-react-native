@@ -3,7 +3,7 @@ import { NativeRouter, Route, Routes, useNavigate } from 'react-router-native';
 import Home from "./components/Home"
 import Nasaphoto from './components/Nasaphoto';
 
-const App = () => {
+function App(){
     return (
         <NativeRouter>
             <Router/>
@@ -11,7 +11,7 @@ const App = () => {
     );
 };
 
-const Router = () => {
+function Router(){
     const navigate = useNavigate();
 
     const navigateToAboutScreen = (data) => {
