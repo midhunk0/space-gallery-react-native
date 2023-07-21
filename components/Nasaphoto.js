@@ -1,10 +1,11 @@
 // @ts-nocheck
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, ActivityIndicator } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import Navbar from './Navbar';
+import {REACT_APP_NASA_KEY} from "@env"
 
-// const apiKey = process.env.REACT_APP_NASA_KEY;
+const apiKey = REACT_APP_NASA_KEY
 
 const styles=StyleSheet.create({
     content:{
@@ -36,33 +37,48 @@ const styles=StyleSheet.create({
 })
 
 function Nasaphoto(){
-    // const [photoData, setPhotoData]=useState(null);
+    const [photoData, setPhotoData]=useState("");
+    const [loading, setLoading]=useState(true)
     const navigate=useNavigate()
 
-    // useEffect(()=>{
-    //     fetchPhoto();
-    //     async function fetchPhoto(){
-    //         const res = await fetch(
-    //             `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`
-    //         );
-    //         const data = await res.json();
-    //         setPhotoData(data);
-    //         // console.log(data);
-    //     }
-    // });
-    // if(!photoData) return <></>
+    useEffect(()=>{
+
+        const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
+        const fetchData=async()=>{
+            const response=await fetch(apiUrl)
+            if(!response.ok){
+                throw new Error("request failed with status", response.status)
+            }
+            const data=await response.json();
+            setPhotoData(data)
+            console.log(data)
+            setLoading(false);
+        }
+        fetchData();
+    },[])
+
     const navigateToHome=()=>{
         navigate("/")
     }
+
+    if(loading){
+        return(
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator size="large" />
+                <Text>Loading...</Text>
+            </View>
+        )
+    }
+
     return (
         <View >
             <Navbar navigateToHome={navigateToHome}/>
             <View style={styles.content}>
-                <Text style={styles.contentTitle}>Galaxy</Text>
-                <Text style={styles.contentDate}>2023-19-07</Text>
-                <Text style={styles.contentExplanation}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
+                <Text style={styles.contentTitle}>{photoData.title}</Text>
+                <Text style={styles.contentDate}>{photoData.date}</Text>
+                <Text style={styles.contentExplanation}>{photoData.explanation}</Text>
                 <Image
-                    source={require("../assets/galaxy.jpg")}
+                    source={{uri:photoData.url}}
                     alt="photo of galaxy"
                     style={styles.contentImage}
                 />

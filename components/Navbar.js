@@ -4,12 +4,10 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 const styles=StyleSheet.create({
     navbar:{
         display:"flex",
-        // alignItems:"center",
         justifyContent:"space-between",
         padding:"3%",
         backgroundColor:"rgba(19, 18, 18, 0.705)",
         marginTop:"7%",
-        // height:"10%"
     },
     narbarLogo:{
         alignItems:"flex-start",
