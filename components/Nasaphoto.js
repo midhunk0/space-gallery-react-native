@@ -1,37 +1,40 @@
 // @ts-nocheck
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, Image, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import Navbar from './Navbar';
-import {REACT_APP_NASA_KEY} from "@env"
+import {REACT_APP_NASA_KEY} from "@env";
 
 const apiKey = REACT_APP_NASA_KEY
 
 const styles=StyleSheet.create({
     content:{
-        display:"flex",
-        flexDirection:"column",
         backgroundColor:"rgba(0, 0, 0, 0.895)",
         height:"100%"
     },
     contentTitle:{
-        marginTop:"2%",
-        color:"rgb(211, 49, 49)"
+        margin:"2%",
+        color:"rgb(211, 49, 49)",
+        fontSize:19,
+        fontWeight:"bold",
+        fontFamily:"monospace"
     },
     contentDate:{
-        display:"flex",
-        alignItems:"center",
         padding:"2%",
-        justifyContent:"space-between",
-        color:"rgb(211, 49, 49)"
+        color:"rgb(211, 49, 49)",
+        fontSize:11,
+        fontWeight:"bold",
+        fontFamily:"monospace"
     },
     contentExplanation:{
-        marginTop:"2%",
-        color:"rgb(238, 226, 210)"
+        margin:"2%",
+        color:"rgb(238, 226, 210)",
+        fontSize:12,
+        fontFamily:"monospace"
     },
     contentImage:{
-        width:"100%",
-        height:"25%",
+        margin:"1%",
+        height:200,
         resizeMode:'cover'
     },
 })
@@ -61,28 +64,26 @@ function Nasaphoto(){
         navigate("/")
     }
 
-    if(loading){
-        return(
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator size="large" />
-                <Text>Loading...</Text>
-            </View>
-        )
-    }
-
     return (
-        <View >
-            <Navbar navigateToHome={navigateToHome}/>
-            <View style={styles.content}>
-                <Text style={styles.contentTitle}>{photoData.title}</Text>
-                <Text style={styles.contentDate}>{photoData.date}</Text>
-                <Text style={styles.contentExplanation}>{photoData.explanation}</Text>
-                <Image
-                    source={{uri:photoData.url}}
-                    alt="photo of galaxy"
-                    style={styles.contentImage}
-                />
-            </View>
+        <View style={{ flex: 1 }}> 
+            <Navbar navigateToHome={navigateToHome} />
+            {loading ? (
+                <View style={{justifyContent:"center", alignItems:"center", flex:1, backgroundColor:"rgba(0, 0, 0, 0.895)"}}>
+                    <ActivityIndicator size="large"/>
+                </View>
+            ) : (
+                <ScrollView style={styles.content}>
+                    <Text style={styles.contentTitle}>{photoData.title}</Text>
+                    <Text style={styles.contentDate}>{photoData.date}</Text>
+                    <Text style={styles.contentExplanation}>{photoData.explanation}</Text>
+                    <Image
+                        source={{ uri: photoData.url }}
+                        alt="photo of galaxy"
+                        style={styles.contentImage}
+                    />
+                    <Text style={styles.contentExplanation}>{photoData.explanation}</Text>
+                </ScrollView>
+            )}
         </View>
     );
 };

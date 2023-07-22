@@ -11,16 +11,18 @@ const styles=StyleSheet.create({
     },
     narbarLogo:{
         alignItems:"flex-start",
-        color:"rgb(211, 49, 49)",
-        fontSize:18
+        color:"rgb(238, 226, 210)",
+        fontSize:18,
+        fontFamily:"monospace",
+        fontWeight:"bold"
     },
     navbarItem:{
         marginTop:"-6%",
         alignItems:"flex-end",
-        color:"rgb(238, 226, 210)"
     },
     navbarText:{
-        color:"rgb(238, 226, 210)"
+        color:"rgb(238, 226, 210)",
+        fontFamily:"monospace"
     }
 })
 
@@ -32,7 +34,7 @@ function Navbar({ navigateToHome }){
         <View style={styles.navbar}>
             <Text style={styles.narbarLogo}>Photo of the day</Text>
             <TouchableOpacity style={styles.navbarItem} onPress={handlePress}>
-                <Text style={styles.navbarText}>take me Home</Text>
+                <Text style={styles.navbarText}>Take me Home</Text>
             </TouchableOpacity>
         </View>
     )

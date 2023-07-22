@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const styles=StyleSheet.create({
@@ -15,13 +15,15 @@ const styles=StyleSheet.create({
         alignItems:"center",
         justifyContent:"center",
         backgroundColor:"rgb(211, 49, 49)",
-        width:"50%",
-        height:"7%",
+        width:"70%",
+        height:"8%",
         borderRadius:40,
-        marginBottom:"7%"
+        marginBottom:"7%",
     },
     buttonText:{
-        color:"rgb(238, 226, 210)"
+        color:"rgb(238, 226, 210)",
+        fontSize:16,
+        fontFamily:"monospace"
     }
 })
 
